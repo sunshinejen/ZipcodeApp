@@ -6,4 +6,11 @@
     <string name="tools_text_descriptionText">Partly cloudy</string>
     <string name="tools_text_tempText">78.9°</string>
     <string name="display_units">Display Units</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="submit_zipcode_text">Submit zipcode</string>
+    <string name="enter_your_zipcode_text">Enter your zipcode</string>
+    <string name="enter_zipcode_text">Enter zipcode</string>
+    <string name="location_symbol">location symbol</string>
 </resources>
