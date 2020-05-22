@@ -1,5 +1,6 @@
 package com.example.zipcodeapp.forecast
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -19,24 +20,27 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 /**
  * A simple [Fragment] subclass.
  */
-class CurrentForecastFragment : Fragment() {
+class WeeklyForecastFragment : Fragment() {
 
     private lateinit var tempDisplaySettingManager: TempDisplaySettingManager
 
     private val forecastRepository = ForecastRespository()
 
-
+    @SuppressLint("FragmentLiveDataObserve")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        tempDisplaySettingManager = TempDisplaySettingManager(requireContext())
+
+        // Inflate the layout for this fragment
+        val view = inflater.inflate(R.layout.fragment_weekly_forecast, container, false)
+
 
         //!! if arguments is null it will crash
         val zipcode = arguments?.getString(KEY_ZIPCODE) ?: ""
 
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_current_forecast, container, false)
+        tempDisplaySettingManager = TempDisplaySettingManager(requireContext())
+
 
         val locationEntryButton : FloatingActionButton = view.findViewById(R.id.locationEntryButton)
         locationEntryButton.setOnClickListener{
@@ -62,6 +66,7 @@ class CurrentForecastFragment : Fragment() {
             //update our list adapter
             dailyForecastAdapter.submitList(forecastItems)
         }
+
         forecastRepository.weeklyForecast.observe(this, weeklyForecastObserver)
 
         forecastRepository.loadForecast(zipcode)
@@ -70,14 +75,13 @@ class CurrentForecastFragment : Fragment() {
     }
 
     private fun showLocationEntry(){
-        val action = CurrentForecastFragmentDirections.actionCurrentForecastFragmentToLocationEntryFragment()
+        val action = WeeklyForecastFragmentDirections.actionWeeklyForecastFragmentToLocationEntryFragment()
         findNavController().navigate(action)
 
     }
 
-
     private fun showForecastDetails(forecast: DailyForecast) {
-        val action = CurrentForecastFragmentDirections.actionCurrentForecastFragmentToForecastDetailsFragment(forecast.temp, forecast.description)
+        val action = WeeklyForecastFragmentDirections.actionWeeklyForecastFragmentToForecastDetailsFragment(forecast.temp, forecast.description)
         findNavController().navigate(action)
     }
 
@@ -86,8 +90,8 @@ class CurrentForecastFragment : Fragment() {
         const val KEY_ZIPCODE = "key_zipcode"
 
         // takes in the zipcode to load the required data
-        fun newInstance(zipcode: String): CurrentForecastFragment {
-            val fragment = CurrentForecastFragment()
+        fun newInstance(zipcode: String): WeeklyForecastFragment {
+            val fragment = WeeklyForecastFragment()
 
             var args = Bundle()
             args.putString(KEY_ZIPCODE, zipcode)
