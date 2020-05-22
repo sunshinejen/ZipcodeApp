@@ -13,4 +13,6 @@
     <string name="enter_your_zipcode_text">Enter your zipcode</string>
     <string name="enter_zipcode_text">Enter zipcode</string>
     <string name="location_symbol">location symbol</string>
+    <string name="bottom_nav_label_today">Today</string>
+    <string name="bottom_nav_label_weekly">Weekly</string>
 </resources>
