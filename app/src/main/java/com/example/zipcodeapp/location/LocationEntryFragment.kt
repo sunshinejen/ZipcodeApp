@@ -9,6 +9,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.example.zipcodeapp.Location
+import com.example.zipcodeapp.LocationRepository
 
 import com.example.zipcodeapp.R
 
@@ -17,11 +19,14 @@ import com.example.zipcodeapp.R
  */
 class LocationEntryFragment : Fragment() {
 
+    private lateinit var locationRepository: LocationRepository
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        locationRepository = LocationRepository(requireContext())
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_location_entry, container, false)
 
@@ -32,12 +37,12 @@ class LocationEntryFragment : Fragment() {
         enterButton.setOnClickListener {
             val zipcode: String = zipcodeEditText.text.toString()
 
-
             if (zipcode.length != 5) {
                 //string.xml message
                 Toast.makeText(requireContext(), R.string.zipcode_entry_error, Toast.LENGTH_SHORT)
                     .show()
             } else {
+                locationRepository.saveLocation(Location.Zipcode(zipcode))
                 findNavController().navigateUp()
             }
         }

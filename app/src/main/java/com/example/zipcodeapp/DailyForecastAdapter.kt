@@ -7,6 +7,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.zipcodeapp.api.DailyForecast
+import java.text.SimpleDateFormat
+import java.util.Date
+
+private val DATE_FORMAT = SimpleDateFormat("MM-dd-yyyy")
 
 //extends syntax (DailyForecastViewHolder( view: View): RecyclerView.ViewHolder(view))
 class DailyForecastViewHolder(
@@ -17,10 +22,12 @@ class DailyForecastViewHolder(
 
     private val tempText = view.findViewById<TextView>(R.id.tempText)
     private val descriptionText = view.findViewById<TextView>(R.id.descriptionText)
+    private val dateText = view.findViewById<TextView>(R.id.dateText)
 
     fun bind(dailyForecast: DailyForecast){
-        tempText.text = formatTempForDisplay(dailyForecast.temp, tempDisplaySettingManager.getTempDisplaySetting())
-        descriptionText.text = dailyForecast.description
+        tempText.text = formatTempForDisplay(dailyForecast.temp.max, tempDisplaySettingManager.getTempDisplaySetting())
+        descriptionText.text = dailyForecast.weather[0].description
+        dateText.text = DATE_FORMAT.format(Date(dailyForecast.date * 1000))
     }
 
 }

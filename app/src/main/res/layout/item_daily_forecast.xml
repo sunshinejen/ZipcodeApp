@@ -13,11 +13,10 @@
         android:id="@+id/tempText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:text="70.0"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/dateText"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -25,9 +24,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:text="Partly Cloudy"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="@id/tempText"
         app:layout_constraintStart_toEndOf="@id/tempText"
         app:layout_constraintTop_toTopOf="@id/tempText" />
+
+    <TextView
+        android:id="@+id/dateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tempText"
+        app:layout_constraintTop_toBottomOf="@+id/tempText"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
