@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.api.load
 import com.example.zipcodeapp.*
@@ -32,14 +33,15 @@ class ForecastDetailsFragment : Fragment() {
 
         val tempText = layout.findViewById<TextView>(R.id.tempText)
         val descriptionText = layout.findViewById<TextView>(R.id.descriptionText)
-        val date = args.date
-        val icon = args.icon
+        val dateTextDetails = layout.findViewById<TextView>(R.id.dateTextDetails)
+        val forecastIconDetails = layout.findViewById<ImageView>(R.id.forecastIconDetails)
+
 
 
         tempText.text = formatTempForDisplay(args.temp, tempDisplaySettingManager.getTempDisplaySetting())
-
         descriptionText.text = args.description
-
+        dateTextDetails.text = args.date
+       forecastIconDetails. = args.icon
 
 
         return layout

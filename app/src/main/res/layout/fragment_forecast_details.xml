@@ -28,7 +28,7 @@
         tools:text="@string/tools_text_descriptionText" />
 
     <ImageView
-        android:id="@+id/forecastIcon"
+        android:id="@+id/forecastIconDetails"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_marginStart="16dp"
@@ -41,7 +41,7 @@
         app:layout_constraintVertical_bias="0.063" />
 
     <TextView
-        android:id="@+id/dateText"
+        android:id="@+id/dateTextDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/tempText"
