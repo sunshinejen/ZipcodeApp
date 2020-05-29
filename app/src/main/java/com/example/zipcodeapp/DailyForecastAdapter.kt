@@ -3,10 +3,12 @@ package com.example.zipcodeapp
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.example.zipcodeapp.api.DailyForecast
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -23,11 +25,15 @@ class DailyForecastViewHolder(
     private val tempText = view.findViewById<TextView>(R.id.tempText)
     private val descriptionText = view.findViewById<TextView>(R.id.descriptionText)
     private val dateText = view.findViewById<TextView>(R.id.dateText)
+    private val forecastIcon = view.findViewById<ImageView>(R.id.forecastIcon)
 
     fun bind(dailyForecast: DailyForecast){
         tempText.text = formatTempForDisplay(dailyForecast.temp.max, tempDisplaySettingManager.getTempDisplaySetting())
         descriptionText.text = dailyForecast.weather[0].description
         dateText.text = DATE_FORMAT.format(Date(dailyForecast.date * 1000))
+
+        val iconID = dailyForecast.weather[0].icon
+        forecastIcon.load("http://openweathermap.org/img/wn/${iconID}@2x.png")
     }
 
 }

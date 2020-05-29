@@ -16,6 +16,10 @@ import com.example.zipcodeapp.api.DailyForecast
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_current_forecast.*
+import kotlinx.android.synthetic.main.fragment_weekly_forecast.view.*
+import kotlinx.android.synthetic.main.item_daily_forecast.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -25,7 +29,7 @@ class CurrentForecastFragment : Fragment() {
     private lateinit var tempDisplaySettingManager: TempDisplaySettingManager
     private val forecastRepository = ForecastRepository()
     private lateinit var locationRepository: LocationRepository
-
+    private val DATE_FORMAT = SimpleDateFormat("MM-dd-yyyy")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +58,7 @@ class CurrentForecastFragment : Fragment() {
         val currentWeatherObserver = Observer<CurrentWeather> {weather ->
             locationName.text = weather.name
             tempText.text = formatTempForDisplay(weather.forecast.temp, tempDisplaySettingManager.getTempDisplaySetting())
+
         }
 
         forecastRepository.currentWeather.observe(viewLifecycleOwner, currentWeatherObserver)
