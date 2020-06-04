@@ -29,7 +29,6 @@ class CurrentForecastFragment : Fragment() {
     private lateinit var tempDisplaySettingManager: TempDisplaySettingManager
     private val forecastRepository = ForecastRepository()
     private lateinit var locationRepository: LocationRepository
-    private val DATE_FORMAT = SimpleDateFormat("MM-dd-yyyy")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

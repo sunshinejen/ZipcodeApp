@@ -94,8 +94,9 @@ class WeeklyForecastFragment : Fragment() {
         val temp = forecast.temp.max
         val description = forecast.weather[0].description
         val date = forecast.date
+        val icon = forecast.weather[0].icon
 
-        val action = WeeklyForecastFragmentDirections.actionWeeklyForecastFragmentToForecastDetailsFragment(temp, description, date, icon = "")
+        val action = WeeklyForecastFragmentDirections.actionWeeklyForecastFragmentToForecastDetailsFragment(temp, description, date, icon)
         findNavController().navigate(action)
     }
 

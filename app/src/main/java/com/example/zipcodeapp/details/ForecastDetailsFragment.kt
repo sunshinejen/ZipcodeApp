@@ -20,6 +20,8 @@ class ForecastDetailsFragment : Fragment() {
 
     private val args : ForecastDetailsFragmentArgs by navArgs()
 
+    private val DATE_FORMAT = SimpleDateFormat("MM-dd-yyyy")
+
 
     private  lateinit var tempDisplaySettingManager: TempDisplaySettingManager
 
@@ -33,16 +35,16 @@ class ForecastDetailsFragment : Fragment() {
 
         val tempText = layout.findViewById<TextView>(R.id.tempText)
         val descriptionText = layout.findViewById<TextView>(R.id.descriptionText)
-        val dateTextDetails = layout.findViewById<TextView>(R.id.dateTextDetails)
-        val forecastIconDetails = layout.findViewById<ImageView>(R.id.forecastIconDetails)
-
-
+        val dateText = layout.findViewById<TextView>(R.id.dateTextDetails)
+        val forecastIcon = layout.findViewById<ImageView>(R.id.forecastIconDetails)
 
         tempText.text = formatTempForDisplay(args.temp, tempDisplaySettingManager.getTempDisplaySetting())
         descriptionText.text = args.description
-        dateTextDetails.text = args.date
-       forecastIconDetails. = args.icon
 
+        val iconID = args.icon
+        forecastIcon.load("http://openweathermap.org/img/wn/${iconID}@2x.png")
+
+        dateText.text = DATE_FORMAT.format(Date(args.date * 1000))
 
         return layout
     }
