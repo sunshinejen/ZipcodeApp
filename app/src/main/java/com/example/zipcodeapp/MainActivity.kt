@@ -24,11 +24,13 @@ class MainActivity : AppCompatActivity() {
 
         tempDisplaySettingManager = TempDisplaySettingManager(this)
 
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        toolbar.setTitle(R.string.app_name)
+        toolbar.inflateMenu(R.menu.settings_menu)
+        setSupportActionBar(toolbar)
 
         val navController = findNavController(R.id.nav_host_fragment)
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        findViewById<Toolbar>(R.id.toolbar).setTitle(R.string.app_name)
-        findViewById<BottomNavigationView>(R.id.bottomNavigationView).setupWithNavController(navController)
+        findViewById<BottomNavigationView>(R.id.bottomNavigation).setupWithNavController(navController)
 
     }
 
