@@ -5,22 +5,30 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.api.load
 import com.example.zipcodeapp.*
+import com.example.zipcodeapp.databinding.FragmentForecastDetailsBinding
 import kotlinx.android.synthetic.main.item_daily_forecast.*
 import java.text.SimpleDateFormat
 import java.util.*
-
-
 
 
 class ForecastDetailsFragment : Fragment() {
 
     private val args : ForecastDetailsFragmentArgs by navArgs()
 
-    private val DATE_FORMAT = SimpleDateFormat("MM-dd-yyyy")
+    private lateinit var viewModelFactory: ForecastDetailsViewModelFactory
+    private val viewModel : ForecastDetailsViewModel by viewModels(
+        factoryProducer = { viewModelFactory }
+    )
+
+    private var _binding: FragmentForecastDetailsBinding? = null
+    //this property is only valid between onCreateview and onDestroyView
+    private val binding get()= _binding!!
 
 
     private  lateinit var tempDisplaySettingManager: TempDisplaySettingManager
@@ -29,23 +37,26 @@ class ForecastDetailsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
-        val layout = inflater.inflate(R.layout.fragment_forecast_details, container, false)
-
+        _binding = FragmentForecastDetailsBinding.inflate(inflater, container, false)
+        viewModelFactory = ForecastDetailsViewModelFactory(args)
         tempDisplaySettingManager = TempDisplaySettingManager(requireContext())
+        return binding.root
+    }
 
-        val tempText = layout.findViewById<TextView>(R.id.tempText)
-        val descriptionText = layout.findViewById<TextView>(R.id.descriptionText)
-        val dateText = layout.findViewById<TextView>(R.id.dateTextDetails)
-        val forecastIcon = layout.findViewById<ImageView>(R.id.forecastIconDetails)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val viewStateObserver = Observer<ForecastDetailsViewState> {viewState ->
+            //update the UI
+            binding.tempText.text= formatTempForDisplay(viewState.temp, tempDisplaySettingManager.getTempDisplaySetting())
+            binding.descriptionText.text = viewState.description
+            binding.dateTextDetails.text = viewState.date
+            binding.forecastIconDetails.load(viewState.iconUrl)
+        }
+        viewModel.viewState.observe(viewLifecycleOwner, viewStateObserver)
+    }
 
-        tempText.text = formatTempForDisplay(args.temp, tempDisplaySettingManager.getTempDisplaySetting())
-        descriptionText.text = args.description
-
-        val iconID = args.icon
-        forecastIcon.load("http://openweathermap.org/img/wn/${iconID}@2x.png")
-
-        dateText.text = DATE_FORMAT.format(Date(args.date * 1000))
-
-        return layout
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
